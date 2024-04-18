@@ -16,99 +16,109 @@ class _LoginState extends State<Login> {
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 
-    bool portrait = screenheight > screenwidth;
+    // bool portrait = screenheight > screenwidth;
 
-    log('portrait: $portrait');
+    // log('portrait: $portrait');
 
     return Scaffold(
         body: Container(
-            decoration: BoxDecoration(
-              
-              image: DecorationImage(
-                image: AssetImage(portrait ? bgportrait : bglandscape ), // Cambia la ruta por la de tu imagen
-                fit: BoxFit.cover,
-              ),
-            ),
+            width: screenwidth,
+            height: screenheight,
             //el singlechild sirve para que cuando salga el teclado pueda verse donde estas escribiendo
             child: SingleChildScrollView(
-              child: SizedBox(
-                width: screenwidth,
-                height: screenheight,
-                child: Row(
-                  children: [
-                    Column(
-                      children: [],
-                    )
-                  ]
+              child: Column(children: [
+                Stack(children: [
+                  Container(
+                    width: screenwidth,
+                    height: screenheight * 0.3,
+                    decoration: const BoxDecoration(
+                        color: accentColor,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10))),
+                    child: Align(
+                        child: Container(
+                      margin: const EdgeInsets.only(top: 50),
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: 100,
+                        height: 100,
+                      ),
+                    )),
                   ),
-              ),
+                ]),
+                Container(
+                  width: screenwidth,
+                  height: screenheight * 0.7,
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      const Text('Iniciar Sesión',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 20),
+                      TextField(
+                          decoration: InputDecoration(
+                              labelText: 'Correo Electrónico',
+                              labelStyle: const TextStyle(color: darkColor),
+                              hintStyle: const TextStyle(color: darkColor),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  borderSide: const BorderSide(
+                                      color: darkColor, width: 2)),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: darkColor, width: 2),
+                                borderRadius: BorderRadius.circular(30),
+                              ))),
+                      const SizedBox(height: 20),
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: 'Contraseña',
+                          labelStyle: const TextStyle(color: darkColor),
+                          hintStyle: const TextStyle(color: darkColor),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide:
+                                  const BorderSide(color: darkColor, width: 2)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: darkColor, width: 2),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: accentColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30))),
+                          child: const Text('Iniciar Sesión',
+                              style: TextStyle(color: Colors.white))),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text('¿No tienes cuenta?'),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/register');
+                              },
+                              child: const Text(
+                                'Regístrate',
+                                style: TextStyle(color: darkColor),
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                )
+              ]),
             )));
-    // backgroundColor: backgroundColor,
-    // body: Column(children: [
-    //   Container(
-    //     height: 210,
-    //     alignment: Alignment.center,
-    //     padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-    //     decoration: const BoxDecoration(
-    //       color: accentColor,
-    //       borderRadius: BorderRadius.only(
-    //         bottomLeft: Radius.circular(90),
-    //         bottomRight: Radius.circular(90),
-    //       ),
-    //     ),
-    //     child: const Row(children: [
-    //       Column(
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: [
-    //           Text(
-    //             "Chambeeta",
-    //             style: TextStyle(
-    //               fontSize: 40,
-    //               fontWeight: FontWeight.bold,
-    //               color: Colors.white
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ],),
-    //   ),
-    //   Container(
-    //     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-    //     child: TextField(
-    //       decoration: InputDecoration(
-    //         border: OutlineInputBorder(
-    //           borderRadius: BorderRadius.circular(90.0),
-    //           ),
-    //         labelText: 'Email',
-    //       ),
-    //     ),
-    //   ),
-    //   Container(
-    //     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-    //     child: TextField(
-    //       obscureText: true,
-    //       decoration: InputDecoration(
-    //         border: OutlineInputBorder(
-    //           borderRadius: BorderRadius.circular(90.0),
-    //         ),
-    //         labelText: 'Password',
-    //       ),
-    //     ),
-    //   ),
-    //   Container(
-    //     height: 80,
-    //     width: 300,
-    //     padding: const EdgeInsets.all(20),
-    //     child: ElevatedButton(
-    //       style: ElevatedButton.styleFrom(
-    //         backgroundColor: accentColor,
-    //         foregroundColor: backgroundColor,
-    //         minimumSize: const Size.fromHeight(50),
-    //       ),
-    //     child: const Text('Log In'),
-    //       onPressed: () {},
-    //   )),
-    // ],)
-    // );
   }
 }
