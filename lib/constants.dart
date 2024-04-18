@@ -10,3 +10,7 @@ const Color darkColor = Color(0xFF333333);
 
 const bgportrait = "assets/images/bgportrait.jpg";
 const bglandscape = "assets/images/bglandscape.png";
+
+const iconHome = Icons.home;
+const iconJobs = Icons.work;
+const iconProfile = Icons.person;

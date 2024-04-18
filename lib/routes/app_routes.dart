@@ -3,20 +3,24 @@ import 'package:flutter/material.dart';
 import '../screens/screens.dart';
 
 class AppRoutes {
-
   static const initialRoute = 'login';
 
   static final menuOptions = <MenuOption>[
     MenuOption(
         route: 'login',
         name: 'login',
-        icon: Icons.home_work_outlined,
+        icon: Icons.login_outlined,
         screen: const Login()),
-    // MenuOption(
-    //     route: 'dashboard_menu',
-    //     name: 'dashboard_menu',
-    //     icon: Icons.login_outlined,
-    //     screen: const DashboardMenu()),
+    MenuOption(
+        route: 'signIn',
+        name: 'signIn',
+        icon: Icons.login_outlined,
+        screen: const SignIn()),
+    MenuOption(
+        route: 'dashboard_menu',
+        name: 'dashboard_menu',
+        icon: Icons.login_outlined,
+        screen: const DashboardMenu()),
     // MenuOption(
     //     route: 'home',
     //     name: 'home',
@@ -47,9 +51,7 @@ class AppRoutes {
     //   name: 'sap_form',
     //   icon: Icons.login_outlined,
     //   screen: const SAPFormPage()),
-    
   ];
-
 
   static Map<String, Widget Function(BuildContext)> getAppRoutes() {
     Map<String, Widget Function(BuildContext)> appRoutes = {};
