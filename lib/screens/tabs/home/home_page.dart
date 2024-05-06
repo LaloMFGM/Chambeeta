@@ -1,8 +1,9 @@
 import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/database/db_config.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -11,13 +12,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: Column(
         children: [
           Container(
-            color: accentColor,
-            height: 180,
-            padding: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
+            height: 200,
+            padding: EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
+            decoration: BoxDecoration(
+              color: accentColor,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ), // Bordes redondeados de 40
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -47,13 +55,20 @@ class _HomePageState extends State<HomePage> {
                 ),
                 PopupMenuButton(
                   itemBuilder: (BuildContext context) {
-                    return ['Opción 1', 'Opción 2', 'Opción 3']
-                        .map((String choice) {
+                    return ['Opción 1', 'Cerrar Sesión'].map((String choice) {
                       return PopupMenuItem(
                         value: choice,
                         child: Text(choice),
                       );
                     }).toList();
+                  },
+                  onSelected: (String choice) {
+                    if (choice == 'Opción 1') {
+                      // Ejecutar una acción para la opción 1
+                    } else if (choice == 'Cerrar Sesión') {
+                      Navigator.pushNamed(context, 'login');
+                      // Ejecutar una acción para cerrar sesión
+                    }
                   },
                 ),
               ],
@@ -62,34 +77,25 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Container(
-              height: 80,
-              width: MediaQuery.of(context).size.width * 0.9,
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: accentColor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: TextField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding:
-                        EdgeInsets.all(10), // Padding interno del TextField
-                    suffixIcon: Icon(Icons.search),
-                    prefixIcon: Icon(Icons.work),
-                    hintText: 'Buscar...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide.none,
-                    ),
+            child: Align(
+              alignment: Alignment.center,
+              child: TextField(
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding:
+                      EdgeInsets.all(10), // Padding interno del TextField
+                  suffixIcon: Icon(Icons.search),
+                  prefixIcon: Icon(Icons.work),
+                  hintText: 'Buscar...',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               ),
             ),
           ),
+
           SizedBox(height: 40),
           Row(
             children: [
@@ -107,7 +113,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: 20),
 
-          // Esto se cambiara por un for que recorra la lista de trabajos recientes y 
+          // Esto se cambiara por un for que recorra la lista de trabajos recientes y
           // cree un card por cada uno, en caso de que se busque un trabajo en especifico
           // se mostrara solo los trabajos que coincidan con la busqueda
 
@@ -146,7 +152,8 @@ class _HomePageState extends State<HomePage> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               onPressed: () {},
-                              child: Text('Postularme', style: TextStyle(color: darkColor)),
+                              child: Text('Postularme',
+                                  style: TextStyle(color: darkColor)),
                             ),
                           )
                         ],
@@ -186,7 +193,8 @@ class _HomePageState extends State<HomePage> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               onPressed: () {},
-                              child: Text('Postularme', style: TextStyle(color: darkColor)),
+                              child: Text('Postularme',
+                                  style: TextStyle(color: darkColor)),
                             ),
                           )
                         ],
@@ -226,7 +234,8 @@ class _HomePageState extends State<HomePage> {
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
                               onPressed: () {},
-                              child: Text('Postularme', style: TextStyle(color: darkColor)),
+                              child: Text('Postularme',
+                                  style: TextStyle(color: darkColor)),
                             ),
                           )
                         ],

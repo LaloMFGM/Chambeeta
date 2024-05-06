@@ -1,7 +1,6 @@
-
-// ignore_for_file: file_names
-
+import 'package:chambeeta/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class UserSettings extends StatefulWidget {
   const UserSettings({super.key});
@@ -11,56 +10,62 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
-int rating = 0;
-
-  void setRating(int newRating) {
-    setState(() {
-      rating = newRating;
-    });
-  }
+  double containerHeight = 200;
+  double avatarRadius = 100;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profile'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(children: [
+        Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [
+          Container(
+            width: double.infinity,
+            height: containerHeight,
+            color: accentColor,
+          ),
+          Positioned(
+            top: containerHeight - avatarRadius,
+            child: CircleAvatar(
+              radius: avatarRadius,
+              backgroundImage: AssetImage(userImg),
+            ),
+          ),
+        ]),
+        SizedBox(height: avatarRadius * 4 / 3),
+        Column(
           children: [
-            const Text(
-              'Username: Usuario123',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Align(
+              alignment: Alignment.center,
+              child: Text(
+                'Lalo MFGM',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-            const SizedBox(height: 10),
-            const Text(
-              'Description: Hola! esta es una descripción de usuario',
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Rating: $rating',
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Row(
-              children: List.generate(5, (index) {
-                return IconButton(
-                  icon: Icon(
-                    rating <= index ? Icons.star_border : Icons.star,
-                    color: Colors.amber,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Calificación : 4.5',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
                   ),
-                  onPressed: () {
-                    setRating(index + 1);
-                  },
-                );
-              }),
-            ),
+                ),
+                SizedBox(width: 5), // Espacio entre el icono y el texto
+                Icon(Icons.star, color: Colors.yellow, size: 20),
+              ],
+            )
           ],
-        ),
-      ),
+        )
+      ]),
     );
   }
 }
