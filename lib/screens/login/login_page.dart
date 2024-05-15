@@ -54,7 +54,7 @@ class _LoginState extends State<Login> {
               Container(
                 width: screenwidth,
                 height: screenheight * 0.7,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.only(top: 40 , left: 20, right: 20, bottom: 40),
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
@@ -65,7 +65,7 @@ class _LoginState extends State<Login> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 40),
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Correo Electrónico',
@@ -109,7 +109,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 40),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, 'dashboard_menu');

@@ -120,9 +120,24 @@ class _OffersState extends State<Offers> {
               ],
             ),
           ),
+          Padding(
+              padding: EdgeInsets.all(20),
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: accentColor,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    textStyle: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'create_offer');
+                  },
+                  child: Icon(Icons.add, color: Colors.white),
+                ),
+              ))
         ],
       ),
     );
-  
   }
 }

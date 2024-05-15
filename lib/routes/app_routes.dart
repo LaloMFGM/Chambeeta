@@ -1,4 +1,5 @@
 import 'package:chambeeta/models/menu_option.dart';
+import 'package:chambeeta/screens/tabs/createOffer/createOffer_page.dart';
 import 'package:flutter/material.dart';
 import '../screens/screens.dart';
 
@@ -21,11 +22,11 @@ class AppRoutes {
         name: 'dashboard_menu',
         icon: Icons.login_outlined,
         screen: const DashboardMenu()),
-    // MenuOption(
-    //     route: 'home',
-    //     name: 'home',
-    //     icon: Icons.login_outlined,
-    //     screen: const HomePage()),
+    MenuOption(
+        route: 'create_offer',
+        name: 'create_offer',
+        icon: Icons.local_offer,
+        screen: const CreateOffer()),
     // MenuOption(
     //     route: 'create_task',
     //     name: 'create_task',
