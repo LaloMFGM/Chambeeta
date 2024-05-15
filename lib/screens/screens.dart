@@ -1,3 +1,5 @@
+export 'package:chambeeta/screens/tabs/offers/offers.dart';
+
 export'package:chambeeta/screens/tabs/userSettings/userSettings_page.dart';
 
 export 'package:chambeeta/screens/tabs/jobs/jobs_page.dart';

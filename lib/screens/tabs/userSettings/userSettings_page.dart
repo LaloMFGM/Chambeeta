@@ -1,71 +1,252 @@
 import 'package:chambeeta/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class UserSettings extends StatefulWidget {
-  const UserSettings({super.key});
+  const UserSettings({Key? key}) : super(key: key);
 
   @override
   State<UserSettings> createState() => _UserSettingsState();
 }
 
 class _UserSettingsState extends State<UserSettings> {
-  double containerHeight = 200;
-  double avatarRadius = 100;
+  bool isEditing = false;
+  DateTime? _selectedDate;
 
   @override
   Widget build(BuildContext context) {
+    double containerHeight = MediaQuery.of(context).size.height * 0.25;
+    double avatarRadius = MediaQuery.of(context).size.width * 0.25;
+
     return Scaffold(
-      body: Column(children: [
-        Stack(clipBehavior: Clip.none, alignment: Alignment.center, children: [
-          Container(
-            width: double.infinity,
-            height: containerHeight,
-            color: accentColor,
-          ),
-          Positioned(
-            top: containerHeight - avatarRadius,
-            child: CircleAvatar(
-              radius: avatarRadius,
-              backgroundImage: AssetImage(userImg),
-            ),
-          ),
-        ]),
-        SizedBox(height: avatarRadius * 4 / 3),
-        Column(
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Lalo MFGM',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+      body: ListView(
+        children: [
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                height: containerHeight,
+                color: accentColor,
+              ),
+              Positioned(
+                top: containerHeight - avatarRadius,
+                child: CircleAvatar(
+                  radius: avatarRadius,
+                  backgroundImage: AssetImage(userImg),
                 ),
               ),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    'Calificación : 4.5',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
+              Positioned(
+                top: 10,
+                right: 0,
+                child: Padding(
+                    padding: EdgeInsets.only(right: 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          isEditing
+                              ? ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isEditing = false;
+                                    });
+                                  },
+                                  child: Text('Guardar'),
+                                )
+                              : ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isEditing = true;
+                                    });
+                                  },
+                                  child: Text('Editar Perfil'),
+                                ),
+                        ])),
+              ),
+            ],
+          ),
+          SizedBox(height: avatarRadius * 7 / 6),
+          Column(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Lalo MFGM',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(width: 5), // Espacio entre el icono y el texto
-                Icon(Icons.star, color: Colors.yellow, size: 20),
-              ],
-            )
-          ],
-        )
-      ]),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Calificación : 4.5',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 5), // Espacio entre el icono y el texto
+                  Icon(Icons.star, color: Colors.yellow, size: 20),
+                ],
+              ),
+              SizedBox(
+                  height:
+                      10), // Espacio entre la información del usuario y los botones
+
+              const SizedBox(height: 10), // Espacio entre los botones
+              isEditing
+                  ? Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Correo Electrónico',
+                              labelStyle: TextStyle(color: darkColor),
+                              hintStyle: TextStyle(color: darkColor),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal:
+                                      20), // Ajustar el tamaño del TextField
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: 'Habilidades',
+                              labelStyle: TextStyle(color: darkColor),
+                              hintStyle: TextStyle(color: darkColor),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal:
+                                      20), // Ajustar el tamaño del TextField
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            final DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(1900),
+                              lastDate: DateTime.now(),
+                            );
+                            if (pickedDate != null) {
+                              setState(() {
+                                _selectedDate = pickedDate;
+                              });
+                            }
+                          },
+                          child: AbsorbPointer(
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                              child: TextField(
+                                  controller: TextEditingController(
+                                      text: _selectedDate != null
+                                          ? '${_selectedDate!.day}-${_selectedDate!.month}-${_selectedDate!.year}'
+                                          : ''),
+                                  decoration: InputDecoration(
+                                    labelText: 'Fecha de Nacimiento',
+                                    labelStyle: TextStyle(color: darkColor),
+                                    hintStyle: TextStyle(color: darkColor),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      borderSide: BorderSide(
+                                          color: darkColor, width: 2),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: darkColor, width: 2),
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(
+                                        vertical: 10,
+                                        horizontal:
+                                            20), // Ajustar el tamaño del TextField
+                                  )),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: TextField(
+                            maxLines: 7,
+                            decoration: InputDecoration(
+                              labelText: 'Hablanos de Ti',
+                              labelStyle: TextStyle(color: darkColor),
+                              hintStyle: TextStyle(color: darkColor),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 40,
+                                  horizontal:
+                                      20), // Ajustar el tamaño del TextField
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Nombre: Lalo MFGM',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'Correo electrónico: correo@example.com',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        // Otros widgets de texto no editables
+                      ],
+                    ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

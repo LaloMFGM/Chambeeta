@@ -1,7 +1,7 @@
 import 'package:chambeeta/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chambeeta/screens/screens.dart'
-    show HomePage, Jobs, UserSettings;
+    show HomePage, Jobs, Offers, UserSettings;
 
 class DashboardMenu extends StatefulWidget {
   const DashboardMenu({super.key});
@@ -15,6 +15,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
   List<String> namepage = [
     'Inicio',
     'Trabajos',
+    'Ofertas'
     'Configuración',
   ];
 
@@ -27,6 +28,7 @@ class _DashboardMenuState extends State<DashboardMenu> {
       //Verificar que si se utilizan cambios como actualizaciones de estado, no se utilice const
       const HomePage(),
       const Jobs(),
+      const Offers(),
       const UserSettings()
     ];
   }
@@ -46,7 +48,11 @@ class _DashboardMenuState extends State<DashboardMenu> {
               ),
               BottomNavigationBarItem(
                 icon: Icon(iconJobs),
-                label: 'Trabajos',
+                label: 'Mis Trabajos',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.local_offer),
+                label: 'Mis Ofertas',
               ),
               BottomNavigationBarItem(
                 icon: Icon(iconProfile),
@@ -65,6 +71,6 @@ class _DashboardMenuState extends State<DashboardMenu> {
   }
 
   int _getSelectIndex() {
-    return selectedIndex <= 3 && selectedIndex >= 0 ? selectedIndex : 0;
+    return selectedIndex <= 4 && selectedIndex >= 0 ? selectedIndex : 0;
   }
 }
