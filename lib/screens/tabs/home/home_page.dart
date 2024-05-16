@@ -1,4 +1,4 @@
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
 import 'package:chambeeta/database/db_config.dart';
 import 'package:flutter/material.dart';
 
@@ -12,69 +12,73 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    
+    double containerHeight = MediaQuery.of(context).size.height * 0.30;
+
     return Scaffold(
       body: Column(
         children: [
           Container(
-            height: 200,
-            padding: EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
-            decoration: BoxDecoration(
+            height: containerHeight,
+            padding: const EdgeInsets.fromLTRB(10.0, 40.0, 10.0, 0.0),
+            decoration: const BoxDecoration(
               color: accentColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
               ), // Bordes redondeados de 40
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage(userImg),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'login');
+                      },
+                      child: const Text('Cerrar Sesión',
+                          style: TextStyle(color: darkColor, fontSize: 12)),
+                    )
+                  ],
                 ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //Cargar información de usuario logeado
-                      Text(
-                        'Eduardo Mahonri Fabian Guerrero',
-                        style: TextStyle(fontSize: 15),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        'Senior Developer in Flutter',
-                        style: TextStyle(fontSize: 14),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                ),
-                PopupMenuButton(
-                  itemBuilder: (BuildContext context) {
-                    return ['Opción 1', 'Cerrar Sesión'].map((String choice) {
-                      return PopupMenuItem(
-                        value: choice,
-                        child: Text(choice),
-                      );
-                    }).toList();
-                  },
-                  onSelected: (String choice) {
-                    if (choice == 'Opción 1') {
-                      // Ejecutar una acción para la opción 1
-                    } else if (choice == 'Cerrar Sesión') {
-                      Navigator.pushNamed(context, 'login');
-                      // Ejecutar una acción para cerrar sesión
-                    }
-                  },
-                ),
+                Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: AssetImage(userImg),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              //Cargar información de usuario logeado
+                              Text(
+                                'Eduardo Mahonri Fabian Guerrero',
+                                style: TextStyle(fontSize: 18),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                              Text(
+                                'Senior Developer in Flutter',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Align(

@@ -1,6 +1,7 @@
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
+import 'package:chambeeta/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -10,12 +11,12 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
-
-
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginProvider>(context);
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 
@@ -54,7 +55,8 @@ class _LoginState extends State<Login> {
               Container(
                 width: screenwidth,
                 height: screenheight * 0.7,
-                padding: const EdgeInsets.only(top: 40 , left: 20, right: 20, bottom: 40),
+                padding: const EdgeInsets.only(
+                    top: 40, left: 20, right: 20, bottom: 40),
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
@@ -67,8 +69,9 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(height: 40),
                     TextField(
+                      controller: userController,
                       decoration: InputDecoration(
-                        labelText: 'Correo Electrónico',
+                        labelText: 'Usuario',
                         labelStyle: const TextStyle(color: darkColor),
                         hintStyle: const TextStyle(color: darkColor),
                         border: OutlineInputBorder(
@@ -89,6 +92,7 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(height: 20),
                     TextField(
+                      controller: passwordController,
                       decoration: InputDecoration(
                         labelText: 'Contraseña',
                         labelStyle: const TextStyle(color: darkColor),
@@ -111,8 +115,18 @@ class _LoginState extends State<Login> {
                     ),
                     const SizedBox(height: 40),
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'dashboard_menu');
+                      onPressed: () async {
+                        bool validate =
+                            await loginProvider.login(userController.text, passwordController.text);
+                        if (validate) {
+                          Navigator.pushNamed(context, 'dashboard_menu');
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Usuario o contraseña incorrectos'),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: accentColor,

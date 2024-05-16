@@ -15,3 +15,5 @@ const userImg = "assets/images/user_logo.png";
 const iconHome = Icons.home;
 const iconJobs = Icons.work;
 const iconProfile = Icons.person;
+
+const baseUrl = 'https://chambetademo.azurewebsites.net/';

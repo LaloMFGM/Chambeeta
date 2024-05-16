@@ -1,4 +1,4 @@
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
 import 'package:flutter/material.dart';
 
 class CreateOffer extends StatefulWidget {
@@ -14,6 +14,7 @@ class _CreateOfferState extends State<CreateOffer> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Agregar Oferta Laboral'),
+          backgroundColor: accentColor,
         ),
         body: SingleChildScrollView(
             child: Column(

@@ -12,4 +12,5 @@ export 'package:chambeeta/screens/login/login_page.dart';
 export 'package:chambeeta/screens/signIn/signIn_page.dart';
 export 'package:chambeeta/screens/tabs/dashboard_menu.dart';
 
+export 'package:chambeeta/screens/tabs/offerInfo/offerInfo_page.dart';
 

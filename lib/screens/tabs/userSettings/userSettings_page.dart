@@ -1,4 +1,4 @@
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
 import 'package:flutter/material.dart';
 
 class UserSettings extends StatefulWidget {
@@ -9,6 +9,15 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
+  
+  TextEditingController _userAddressController = TextEditingController();
+  TextEditingController _phoneNumberController = TextEditingController();
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _dateOfBirthController = TextEditingController();
+  TextEditingController _skillsController = TextEditingController();
+  
+  
   bool isEditing = false;
   DateTime? _selectedDate;
 
@@ -18,7 +27,8 @@ class _UserSettingsState extends State<UserSettings> {
     double avatarRadius = MediaQuery.of(context).size.width * 0.25;
 
     return Scaffold(
-      body: ListView(
+        body: SingleChildScrollView(
+      child: Column(
         children: [
           Stack(
             clipBehavior: Clip.none,
@@ -33,11 +43,11 @@ class _UserSettingsState extends State<UserSettings> {
                 top: containerHeight - avatarRadius,
                 child: CircleAvatar(
                   radius: avatarRadius,
-                  backgroundImage: AssetImage(userImg),
+                  backgroundImage: const AssetImage(userImg),
                 ),
               ),
               Positioned(
-                top: 10,
+                top: 25,
                 right: 0,
                 child: Padding(
                     padding: EdgeInsets.only(right: 10),
@@ -59,7 +69,7 @@ class _UserSettingsState extends State<UserSettings> {
                                       isEditing = true;
                                     });
                                   },
-                                  child: Text('Editar Perfil'),
+                                  child: const Text('Editar Perfil'),
                                 ),
                         ])),
               ),
@@ -68,7 +78,7 @@ class _UserSettingsState extends State<UserSettings> {
           SizedBox(height: avatarRadius * 7 / 6),
           Column(
             children: [
-              Align(
+              const Align(
                 alignment: Alignment.center,
                 child: Text(
                   'Lalo MFGM',
@@ -78,8 +88,8 @@ class _UserSettingsState extends State<UserSettings> {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
-              Row(
+              const SizedBox(height: 10),
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Align(
@@ -96,7 +106,7 @@ class _UserSettingsState extends State<UserSettings> {
                   Icon(Icons.star, color: Colors.yellow, size: 20),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                   height:
                       10), // Espacio entre la información del usuario y los botones
 
@@ -107,8 +117,9 @@ class _UserSettingsState extends State<UserSettings> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
                           child: TextField(
+                            controller: _userAddressController,
                             decoration: InputDecoration(
-                              labelText: 'Correo Electrónico',
+                              labelText: 'Dirección',
                               labelStyle: TextStyle(color: darkColor),
                               hintStyle: TextStyle(color: darkColor),
                               border: OutlineInputBorder(
@@ -131,8 +142,59 @@ class _UserSettingsState extends State<UserSettings> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
                           child: TextField(
+                            controller: _phoneNumberController,
                             decoration: InputDecoration(
-                              labelText: 'Habilidades',
+                              labelText: '# de Teléfono',
+                              labelStyle: TextStyle(color: darkColor),
+                              hintStyle: TextStyle(color: darkColor),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal:
+                                      20), // Ajustar el tamaño del TextField
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: TextField(
+                            controller: _firstNameController,
+                            decoration: InputDecoration(
+                              labelText: 'Nombre',
+                              labelStyle: TextStyle(color: darkColor),
+                              hintStyle: TextStyle(color: darkColor),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: darkColor, width: 2),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10,
+                                  horizontal:
+                                      20), // Ajustar el tamaño del TextField
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: TextField(
+                            controller: _lastNameController,
+                            decoration: InputDecoration(
+                              labelText: 'Apellido',
                               labelStyle: TextStyle(color: darkColor),
                               hintStyle: TextStyle(color: darkColor),
                               border: OutlineInputBorder(
@@ -199,9 +261,10 @@ class _UserSettingsState extends State<UserSettings> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
                           child: TextField(
+                            controller: _skillsController,
                             maxLines: 7,
                             decoration: InputDecoration(
-                              labelText: 'Hablanos de Ti',
+                              labelText: 'Habilidades y Experiencia',
                               labelStyle: TextStyle(color: darkColor),
                               hintStyle: TextStyle(color: darkColor),
                               border: OutlineInputBorder(
@@ -247,6 +310,6 @@ class _UserSettingsState extends State<UserSettings> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

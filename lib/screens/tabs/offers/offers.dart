@@ -1,4 +1,4 @@
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
 import 'package:flutter/material.dart';
 
 class Offers extends StatefulWidget {
@@ -16,8 +16,8 @@ class _OffersState extends State<Offers> {
         children: [
           Container(
             height: 120,
-            padding: EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
+            decoration: const BoxDecoration(
               color: accentColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),

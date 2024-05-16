@@ -1,4 +1,4 @@
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
 import 'package:flutter/material.dart';
 
 class Jobs extends StatefulWidget {
@@ -91,7 +91,10 @@ class _JobsState extends State<Jobs> {
                                     Container(
                                         width: 200,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                                context, 'offer_info');
+                                          },
                                           child: const Align(
                                             alignment: Alignment.bottomCenter,
                                             child: Text('Ver Detalles'),

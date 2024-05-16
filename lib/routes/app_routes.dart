@@ -1,7 +1,7 @@
 import 'package:chambeeta/models/menu_option.dart';
 import 'package:chambeeta/screens/tabs/createOffer/createOffer_page.dart';
 import 'package:flutter/material.dart';
-import '../screens/screens.dart';
+import '../models/screens.dart';
 
 class AppRoutes {
   static const initialRoute = 'login';
@@ -27,6 +27,11 @@ class AppRoutes {
         name: 'create_offer',
         icon: Icons.local_offer,
         screen: const CreateOffer()),
+    MenuOption(
+        route: 'offer_info',
+        name: 'offer_info',
+        icon: Icons.local_offer,
+        screen: const OfferInfo()),
     // MenuOption(
     //     route: 'create_task',
     //     name: 'create_task',

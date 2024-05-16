@@ -1,6 +1,6 @@
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:chambeeta/screens/screens.dart'
+import 'package:chambeeta/models/screens.dart'
     show HomePage, Jobs, Offers, UserSettings;
 
 class DashboardMenu extends StatefulWidget {

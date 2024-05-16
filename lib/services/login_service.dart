@@ -1,77 +1,50 @@
 import 'dart:developer';
 
 import 'package:chambeeta/models/constants.dart';
+import 'package:chambeeta/models/interfaces/login.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class LoginProvider extends ChangeNotifier {
-  String _user = "";
-  String _email = "";
-  String _password = "";
-
-  String get user => _user;
-  String get email => _email;
-  String get password => _password;
-
-  setUser(String user) {
-    _user = user;
-    notifyListeners();
-  }
-
-  setEmail(String email) {
-    _email = email;
-    notifyListeners();
-  }
-
-  setPassword(String password) {
-    _password = password;
-    notifyListeners();
-  }
-
-  Future<bool> signIn( String user , String email, String password) async {
-    String url = '$baseUrl/cuentas/registrar';
+class LoginService {
+  Future<bool?> signIn(String email, String password, String user) async {
+    String url = '$baseUrl/api/auth/login';
 
     Map<String, String>? headers = {
-      'Content-Type': 'application/json-patch+json',
-      'Accept': 'text/json',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
       'Authorization': ''
     };
 
     Map<String, dynamic> data = {
       'email': email,
-      'userName': user,
+      'user': user,
       'password': password,
     };
 
     try {
       final response =
           await Dio().post(url, data: data, options: Options(headers: headers));
-      
+      log(response.data.toString());
 
-      if (response.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
-
-
+      return response.statusCode == 200 ? true : false;
     } catch (e) {
       log('Error: $e');
       return false;
     }
   }
 
-  Future<bool> login(
-      String user, String password) async {
+  Future<bool?> login(
+      BuildContext context, String user, String password) async {
     String url = '$baseUrl/cuentas/login';
 
     Map<String, String>? headers = {
-      'Content-Type': 'application/json-patch+json',
-      'accept': 'text/plain', 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': ''
     };
 
     Map<String, dynamic> data = {
-      'userName': user,
+      'user': user,
       'password': password,
     };
 

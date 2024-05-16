@@ -1,8 +1,9 @@
-
 // ignore_for_file: file_names
 
-import 'package:chambeeta/constants.dart';
+import 'package:chambeeta/models/constants.dart';
+import 'package:chambeeta/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -12,8 +13,14 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  TextEditingController userController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final signInProvider = Provider.of<LoginProvider>(context);
+
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
 
@@ -56,6 +63,7 @@ class _SignInState extends State<SignIn> {
                               fontSize: 20, fontWeight: FontWeight.bold)),
                       const SizedBox(height: 20),
                       TextField(
+                          controller: userController,
                           decoration: InputDecoration(
                               labelText: 'Nombre de Usuario',
                               labelStyle: const TextStyle(color: darkColor),
@@ -71,6 +79,7 @@ class _SignInState extends State<SignIn> {
                               ))),
                       const SizedBox(height: 20),
                       TextField(
+                          controller: emailController,
                           decoration: InputDecoration(
                               labelText: 'Correo Electrónico',
                               labelStyle: const TextStyle(color: darkColor),
@@ -86,6 +95,7 @@ class _SignInState extends State<SignIn> {
                               ))),
                       const SizedBox(height: 20),
                       TextField(
+                        controller: passwordController,
                         decoration: InputDecoration(
                           labelText: 'Contraseña',
                           labelStyle: const TextStyle(color: darkColor),
@@ -107,7 +117,7 @@ class _SignInState extends State<SignIn> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/login');
+                              Navigator.pushNamed(context, 'login');
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: accentColor,
@@ -117,13 +127,26 @@ class _SignInState extends State<SignIn> {
                           ),
                           const SizedBox(width: 20),
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               //Aqui vamos a verificar que si se haya realizado el registro en caso de que no, muestra un snackbar con un mensaje
                               //Vamos a verificar si se separa la logica en 2 con un apartado visual y otro widget de logica
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Cuenta creada exitosamente')));
-                              Navigator.pushNamed(context, 'login');
+                              bool validate = await signInProvider.signIn(
+                                  userController.text,
+                                  emailController.text,
+                                  passwordController.text);
+
+                              if (validate) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Cuenta creada exitosamente')));
+                                Navigator.pushNamed(context, 'login');
+                              }else{
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Error al crear la cuenta')));
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: accentColor,
