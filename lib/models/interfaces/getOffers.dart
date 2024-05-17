@@ -1,15 +1,22 @@
 import 'dart:convert';
 
-class GetOffers {
+import 'package:flutter/foundation.dart';
+
+List<GetOffer> getOfferFromJson(String str) => List<GetOffer>.from(json.decode(str).map((x) => GetOffer.fromJson(x)));
+
+String getOfferToJson(List<GetOffer> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class GetOffer {
     int id;
     String title;
     String description;
     String requirements;
-    int salary;
+    double salary;
     String location;
     int statusJobId;
+    StatusJob statusJob;
 
-    GetOffers({
+    GetOffer({
         required this.id,
         required this.title,
         required this.description,
@@ -17,13 +24,10 @@ class GetOffers {
         required this.salary,
         required this.location,
         required this.statusJobId,
+        required this.statusJob,
     });
 
-    factory GetOffers.fromRawJson(String str) => GetOffers.fromJson(json.decode(str));
-
-    String toRawJson() => json.encode(toJson());
-
-    factory GetOffers.fromJson(Map<String, dynamic> json) => GetOffers(
+    factory GetOffer.fromJson(Map<String, dynamic> json) => GetOffer(
         id: json["id"],
         title: json["title"],
         description: json["description"],
@@ -31,6 +35,7 @@ class GetOffers {
         salary: json["salary"],
         location: json["location"],
         statusJobId: json["statusJobId"],
+        statusJob: StatusJob.fromJson(json["statusJob"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -41,6 +46,26 @@ class GetOffers {
         "salary": salary,
         "location": location,
         "statusJobId": statusJobId,
+        "statusJob": statusJob.toJson(),
     };
 }
 
+class StatusJob {
+    int id;
+    String description;
+
+    StatusJob({
+        required this.id,
+        required this.description,
+    });
+
+    factory StatusJob.fromJson(Map<String, dynamic> json) => StatusJob(
+        id: json["id"],
+        description: json["description"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "description": description,
+    };
+}

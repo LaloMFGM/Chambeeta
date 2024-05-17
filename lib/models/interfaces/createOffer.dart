@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-class CreateOffer {
+class CreateOffers {
     String title;
     String description;
     String requirements;
     int salary;
     String location;
 
-    CreateOffer({
+    CreateOffers({
         required this.title,
         required this.description,
         required this.requirements,
@@ -15,11 +15,11 @@ class CreateOffer {
         required this.location,
     });
 
-    factory CreateOffer.fromRawJson(String str) => CreateOffer.fromJson(json.decode(str));
+    factory CreateOffers.fromRawJson(String str) => CreateOffers.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory CreateOffer.fromJson(Map<String, dynamic> json) => CreateOffer(
+    factory CreateOffers.fromJson(Map<String, dynamic> json) => CreateOffers(
         title: json["title"],
         description: json["description"],
         requirements: json["requirements"],

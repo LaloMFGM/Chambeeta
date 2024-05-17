@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:chambeeta/models/constants.dart';
+import 'package:chambeeta/models/interfaces/login.dart';
+import 'package:chambeeta/models/shared_preference.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +30,7 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> signIn( String user , String email, String password) async {
+  Future<bool> signIn(String user, String email, String password) async {
     String url = '$baseUrl/cuentas/registrar';
 
     Map<String, String>? headers = {
@@ -46,28 +48,24 @@ class LoginProvider extends ChangeNotifier {
     try {
       final response =
           await Dio().post(url, data: data, options: Options(headers: headers));
-      
 
       if (response.statusCode == 200) {
         return true;
       } else {
         return false;
       }
-
-
     } catch (e) {
       log('Error: $e');
       return false;
     }
   }
 
-  Future<bool> login(
-      String user, String password) async {
+  Future<bool> login(String user, String password) async {
     String url = '$baseUrl/cuentas/login';
 
     Map<String, String>? headers = {
       'Content-Type': 'application/json-patch+json',
-      'accept': 'text/plain', 
+      'accept': 'text/plain',
     };
 
     Map<String, dynamic> data = {
@@ -78,9 +76,15 @@ class LoginProvider extends ChangeNotifier {
     try {
       final response =
           await Dio().post(url, data: data, options: Options(headers: headers));
-      log(response.data.toString());
+      
 
       if (response.statusCode == 200) {
+        Login loginmodel = Login.fromJson(response.data);
+
+        loginmodel.username = user;
+
+        UserSharedPreferences().saveUserInfo(loginmodel);
+
         return true;
       } else {
         return false;

@@ -1,4 +1,5 @@
 import 'package:chambeeta/providers/auth_provider.dart';
+
 import 'package:chambeeta/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => LoginProvider()),
+          ChangeNotifierProvider(create: (context) => LoginProvider())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

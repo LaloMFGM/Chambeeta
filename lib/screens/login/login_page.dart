@@ -19,6 +19,7 @@ class _LoginState extends State<Login> {
     final loginProvider = Provider.of<LoginProvider>(context);
     double screenwidth = MediaQuery.of(context).size.width;
     double screenheight = MediaQuery.of(context).size.height;
+    bool obscureText = true;
 
     return Scaffold(
       body: SizedBox(
@@ -31,14 +32,7 @@ class _LoginState extends State<Login> {
                 children: [
                   Container(
                     width: screenwidth,
-                    height: screenheight * 0.25,
-                    decoration: const BoxDecoration(
-                      color: accentColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      ),
-                    ),
+                    height: screenheight * 0.30,
                     child: Align(
                       child: Container(
                         margin: const EdgeInsets.only(top: 50),
@@ -93,6 +87,7 @@ class _LoginState extends State<Login> {
                     const SizedBox(height: 20),
                     TextField(
                       controller: passwordController,
+                      obscureText: obscureText,
                       decoration: InputDecoration(
                         labelText: 'Contraseña',
                         labelStyle: const TextStyle(color: darkColor),
@@ -111,16 +106,32 @@ class _LoginState extends State<Login> {
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            obscureText
+                                ? Icons.visibility
+                                // ignore: dead_code
+                                : Icons.visibility_off,
+                            color: darkColor,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              obscureText = !obscureText;
+                            });
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(height: 40),
                     ElevatedButton(
                       onPressed: () async {
-                        bool validate =
-                            await loginProvider.login(userController.text, passwordController.text);
+                        bool validate = await loginProvider.login(
+                            userController.text, passwordController.text);
                         if (validate) {
+                          // ignore: use_build_context_synchronously
                           Navigator.pushNamed(context, 'dashboard_menu');
                         } else {
+                          // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text('Usuario o contraseña incorrectos'),

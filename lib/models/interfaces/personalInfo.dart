@@ -1,30 +1,33 @@
 import 'dart:convert';
 
-class PersnonalInfo {
+class PersonalInfo {
     String userAddress;
     String phoneNumber;
     String firstName;
     String lasttName;
     DateTime dateOfBirth;
+    String skills;
 
-    PersnonalInfo({
+    PersonalInfo({
         required this.userAddress,
         required this.phoneNumber,
         required this.firstName,
         required this.lasttName,
         required this.dateOfBirth,
+        required this.skills,
     });
 
-    factory PersnonalInfo.fromRawJson(String str) => PersnonalInfo.fromJson(json.decode(str));
+    factory PersonalInfo.fromRawJson(String str) => PersonalInfo.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory PersnonalInfo.fromJson(Map<String, dynamic> json) => PersnonalInfo(
+    factory PersonalInfo.fromJson(Map<String, dynamic> json) => PersonalInfo(
         userAddress: json["userAddress"],
         phoneNumber: json["phoneNumber"],
         firstName: json["firstName"],
         lasttName: json["lasttName"],
         dateOfBirth: DateTime.parse(json["dateOfBirth"]),
+        skills: json["skills"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -33,5 +36,6 @@ class PersnonalInfo {
         "firstName": firstName,
         "lasttName": lasttName,
         "dateOfBirth": dateOfBirth.toIso8601String(),
+        "skills": skills,
     };
 }
